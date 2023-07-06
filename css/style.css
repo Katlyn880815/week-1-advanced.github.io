@@ -86,9 +86,12 @@
   margin-top: 2rem;
 }
 
-.content__item-above,
-.content__item-below {
+.content__item-above {
   background-color: #d9eff9;
+}
+
+.content__item-below {
+  position: relative;
 }
 
 .content__item-above {
@@ -97,6 +100,10 @@
   gap: 1rem;
 
   height: 5rem;
+}
+
+.content__pic {
+  position: relative;
 }
 
 .content__pic img {
@@ -120,6 +127,20 @@
   object-fit: cover;
 }
 
-.content__txt {
+.content__txt-below {
   padding: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.icon__star {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+
+  color: yellow;
 }
