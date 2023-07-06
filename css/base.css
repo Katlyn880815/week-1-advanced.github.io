@@ -1,0 +1,23 @@
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Lora", serif;
+  font-size: 2rem;
+}
+
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+}
