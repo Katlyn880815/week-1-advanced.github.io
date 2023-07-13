@@ -20,12 +20,15 @@ def calculate_sum_of_bonus(data):
 
 
     employees = data['employees']
+    sum_of_bonus = 0
     for data in employees:
         handleNumber = handleStr(data['salary'])
         salary = handleNumber.toNumber()
         calcBonusObj = bonus(data['performance'], salary, data['role'])
         finalBonus = calcBonusObj.CalculateBonus()
-        print('The sum of', data['name'],"'s bonus is NTD", finalBonus)
+        sum_of_bonus += finalBonus
+
+    print(sum_of_bonus)
 
 
 # 計算 Bonus 實體物件

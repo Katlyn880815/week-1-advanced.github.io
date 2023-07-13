@@ -33,6 +33,7 @@ function calculateSumOfBonus(data) {
 
   //My Code here :
   let employeesList = data.employees;
+  let sumOfBonus = 0;
 
   for (let i = 0; i < employeesList.length; i++) {
     let salary = toNumber(employeesList[i].salary);
@@ -43,8 +44,9 @@ function calculateSumOfBonus(data) {
       employeesList[i].role
     );
 
-    console.log(`The sum of ${name}'s bonus is NTD ${bonus}`);
+    sumOfBonus += bonus;
   }
+  console.log(sumOfBonus);
 }
 
 //計算Bonus
