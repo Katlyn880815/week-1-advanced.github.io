@@ -137,6 +137,7 @@ function render() {
       contentItemBelow.appendChild(contentPicBoxBottom);
       contentItemBelow.appendChild(contentTxt);
       contentBoxBelow.appendChild(contentItemBelow);
+      if (j === dataAll[0].length - 1) btnLoad.style.display = "none";
     }
   });
 }

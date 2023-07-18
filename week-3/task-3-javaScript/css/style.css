@@ -131,3 +131,21 @@
 .content__txt {
   padding: 1rem;
 }
+
+.btn__load {
+  border-radius: 1.6rem;
+  display: block;
+  margin: 2rem auto 6rem auto;
+  background-color: #d9eff9;
+  border: none;
+  padding: 1.5rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+
+  transition: all 0.3s;
+}
+
+.btn__load:hover {
+  background-color: antiquewhite;
+  padding: 1.5rem 2rem 1.5rem 2rem;
+}
