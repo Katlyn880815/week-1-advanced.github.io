@@ -35,93 +35,63 @@ function render() {
 
   //上方三個區塊
   const contentBoxAbove = document.querySelector(".content__box-above");
-  for (let i = 0; i < 3; i++) {
-    //新增元素div(class = content__item-above)
-    let contentItemAbove = document.createElement("div");
-    contentItemAbove.className = "content__item-above";
-    //新增元素div(class = content__pic content__pic-top)
-    let contentPicBoxTop = document.createElement("div");
-    contentPicBoxTop.className = "content__pic content__pic-top";
-    //新增元素div(class = content__txt)
-    let contentTxt = document.createElement("div");
-    contentTxt.className = "content__txt";
-
-    //圖片區塊content__pic-top
-    let imgEl = document.createElement("img");
-    imgEl.className = "content__img content__img-top";
-    imgEl.src = get_first_img(dataAll[0][i].file);
-    contentPicBoxTop.appendChild(imgEl);
-
-    //文字區塊content__txt
-    //新增元素h3
-    let newH3 = document.createElement("h3");
-    newH3.className = "heading__secondary";
-    //新增文字節點
-    let title = document.createTextNode(dataAll[0][i].stitle);
-    //標題文字節點加進h3裡
-    newH3.appendChild(title);
-    contentTxt.appendChild(newH3);
-
-    //全部放進contentItemAbove
-    contentItemAbove.appendChild(contentPicBoxTop);
-    contentItemAbove.appendChild(contentTxt);
-    contentBoxAbove.appendChild(contentItemAbove);
-  }
+  let count = 0;
+  getItems(
+    contentBoxAbove,
+    "content__item-above",
+    "content__pic-top",
+    "content__img-top"
+  );
 
   //下方12個區塊
   const contentBoxBelow = document.querySelector(".content__box-below");
-  for (let i = 3; i < 15; i++) {
-    console.log(i);
-    let contentItemBelow = document.createElement("div");
-    contentItemBelow.className = "content__item-below";
-    //新增元素picBoxBottom
-    let contentPicBoxBottom = document.createElement("div");
-    contentPicBoxBottom.className = "content__pic content__pic-bottom";
-    //新增元素content__txt
-    let contentTxt = document.createElement("div");
-    contentTxt.className = "content__txt";
-
-    //新增元素img
-    let imgEl = document.createElement("img");
-    imgEl.className = "content__img content__img-bottom";
-    imgEl.src = get_first_img(dataAll[0][i].file);
-    contentPicBoxBottom.appendChild(imgEl);
-
-    //新增元素h3
-    let h3 = document.createElement("h3");
-    h3.className = "heading__secondary";
-
-    //新增文字節點
-    let title = document.createTextNode(dataAll[0][i].stitle);
-    h3.appendChild(title);
-
-    contentTxt.appendChild(h3);
-
-    //放進contentItemBelow
-    contentItemBelow.appendChild(contentPicBoxBottom);
-    contentItemBelow.appendChild(contentTxt);
-    contentBoxBelow.appendChild(contentItemBelow);
-  }
+  getItems(
+    contentBoxBelow,
+    "content__item-below",
+    "content__pic-bottom",
+    "content__img-bottom"
+  );
 
   //先有12個區塊，使用者點擊按鍵繼續載入12個
   const btnLoad = document.querySelector(".btn__load");
-  let count = 15;
   btnLoad.addEventListener("click", function () {
-    for (let i = 0, j = count; i < 12; i++, j++, count++) {
-      let contentItemBelow = document.createElement("div");
-      contentItemBelow.className = "content__item-below";
+    getItems(
+      contentBoxBelow,
+      "content__item-below",
+      "content__pic-bottom",
+      "content__img-bottom"
+    );
+  });
+
+  //取得圖片網址函式
+  function get_first_img(str) {
+    let index = str.search(/jpg|JPG/i);
+    let imgUrl = str.slice(0, index + 3);
+    return imgUrl;
+  }
+
+  //取得內部html
+  function getItems(
+    contentBox,
+    contentItemclassName,
+    contentPicClassName,
+    contentImgClassName
+  ) {
+    for (let i = 0, j = count + 1; i < 12; i++, j++, count++) {
+      let contentItem = document.createElement("div");
+      contentItem.className = contentItemclassName;
       //新增元素picBoxBottom
-      let contentPicBoxBottom = document.createElement("div");
-      contentPicBoxBottom.className = "content__pic content__pic-bottom";
+      let contentPic = document.createElement("div");
+      contentPic.className = `content__pic ${contentPicClassName}`;
       //新增元素content__txt
       let contentTxt = document.createElement("div");
       contentTxt.className = "content__txt";
 
       //新增元素img
       let imgEl = document.createElement("img");
-      imgEl.className = "content__img content__img-bottom";
+      imgEl.className = `content__img ${contentImgClassName}`;
       imgEl.src = get_first_img(dataAll[0][j].file);
-      contentPicBoxBottom.appendChild(imgEl);
+      contentPic.appendChild(imgEl);
 
       //新增元素h3
       let h3 = document.createElement("h3");
@@ -134,17 +104,11 @@ function render() {
       contentTxt.appendChild(h3);
 
       //放進contentItemBelow
-      contentItemBelow.appendChild(contentPicBoxBottom);
-      contentItemBelow.appendChild(contentTxt);
-      contentBoxBelow.appendChild(contentItemBelow);
+      contentItem.appendChild(contentPic);
+      contentItem.appendChild(contentTxt);
+      contentBox.appendChild(contentItem);
       if (j === dataAll[0].length - 1) btnLoad.style.display = "none";
+      if (contentBox === contentBoxAbove && count === 2) break;
     }
-  });
-}
-
-//取得圖片網址
-function get_first_img(str) {
-  let index = str.search(/jpg|JPG/i);
-  let imgUrl = str.slice(0, index + 3);
-  return imgUrl;
+  }
 }
