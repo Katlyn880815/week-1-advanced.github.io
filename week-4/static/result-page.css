@@ -1,0 +1,49 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.container {
+  max-width: 120rem;
+}
+
+.result-box {
+  margin: 20rem auto;
+  border: 0.1rem solid #000;
+  width: 50rem;
+}
+
+.header {
+  background-color: #1d3446;
+}
+
+.content {
+  padding: 3rem;
+}
+
+.heading__primary {
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.heading__secondary {
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.btn {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.7rem;
+  text-decoration: none;
+}

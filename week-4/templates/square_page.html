@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Square result</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='result-page.css') }}"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="result-box">
+          <div class="header">
+            <h1 class="heading__primary">正整數平方計算結果</h1>
+          </div>
+          <div class="content">
+            <h2 class="heading__secondary">{{result}}</h2>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

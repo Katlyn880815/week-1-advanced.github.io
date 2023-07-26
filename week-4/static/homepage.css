@@ -1,0 +1,86 @@
+/* reset */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.container {
+  max-width: 130rem;
+}
+
+.login__box,
+.calc__box {
+  margin: 15rem auto 0 auto;
+  border: 0.1rem solid #000;
+  width: 50rem;
+}
+
+.calc__box {
+  margin: 0 auto 2rem auto;
+  border-top: 0;
+}
+
+.login__box-header {
+  background-color: #1d3446;
+}
+
+.login__box-content {
+  margin: 4rem 0;
+}
+
+.login__form,
+.calc__form {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.input__label {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.input__block {
+  margin-bottom: 1rem;
+}
+
+.btn__signin,
+.btn__calc {
+  display: block;
+  margin: 1.5rem auto;
+}
+
+/*** FONT ****/
+.heading__primary {
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.heading__secondary {
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.hint__mes-check_box {
+  color: red;
+  font-size: 1.7rem;
+  opacity: 0;
+  text-align: center;
+}
+
+.calc__box-content {
+  margin: 0;
+  padding: 4rem 0;
+}
+
+.calc__label {
+  font-size: 1.7rem;
+}

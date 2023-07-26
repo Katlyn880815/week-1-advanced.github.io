@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error page</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='result-page.css') }}"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="result-box">
+          <div class="header">
+            <h1 class="heading__primary">失敗頁面</h1>
+          </div>
+          <div class="content">
+            <h2 class="heading__secondary">{{message}}</h2>
+            <a href="/" class="btn btn__back_to_signin">回登入頁面，重新登入</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

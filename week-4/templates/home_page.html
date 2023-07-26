@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}" />
+    
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div class="login__box">
+          <div class="login__box-header">
+            <h1 class="heading__primary">歡迎光臨，請輸入帳號密碼</h2>
+          </div>
+          <div class="login__box-content">
+            <h3 class="heading__secondary">登入系統</h3>
+            <form action="/signin" class="login__form" method="POST">
+              <label for="user_account" class="input__label">帳號</label>
+              <input type="text" name="user_account" id="user_account" class="input__block"/>
+              <br />
+              <label for="user_password" class="input__label">密碼</label>
+              <input type="password" name="user_password" id="user_password" class="input__block"/>
+              <br />
+              <label for="accept_terms" class="input__label">同意條款</label>
+              <input type="checkbox" id="accept_terms"/>
+              <button class="btn__signin">登入</button>
+            </form>
+            <p class="hint__mes-check_box">請勾選同意條款!</p>
+          </div>
+        </div>
+        <div class="calc__box">
+          <div class="calc__box-content">
+            <h3 class="heading__secondary">計算正整數的平方</h3>
+            <form action="/square" class="calc__form">
+              <label for="number" class="calc__label">正整數</label>
+              <input type="text" name="user_input_num" id="number" class="calc__input">
+              <button class="btn__calc">計算</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+    <script src="/static/script.js" type="text/javascript"></script>
+  </body>
+</html>
