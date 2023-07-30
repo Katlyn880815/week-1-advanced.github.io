@@ -69,7 +69,8 @@ html {
   text-align: center;
 }
 
-.hint__mes-check_box {
+.hint__mes-check_box,
+.hint_entering_correct_num {
   color: red;
   font-size: 1.7rem;
   opacity: 0;

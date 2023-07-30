@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, url_for
 
 #建立app物件
 #css\javaScript為靜態物件，要在此設定靜態檔案路徑，static_url_path為找到靜態檔案的路徑 -> 根目錄/+資料夾名稱
@@ -56,13 +56,20 @@ def handle_signout():
     session['signed_in'] = False
     return redirect('/')
 
-######## Square Page #########
-@app.route('/square')
+######## Varify Page #########
+@app.route('/varify')
 def calc_square():
     #取使用者輸入的數字
-    num = request.args.get('user_input_num')
+    num = request.args.get('inputNum')
+        #利用redirect url_for傳遞使用者輸入參數
+    return redirect(url_for('square_result_page', num = num))
+        
+######## Square Page #########
+@app.route('/square/<num>')
+def square_result_page(num):
     num = int(num)
     result = num ** 2
+
     return render_template('square_page.html', result = result)
 
 app.run(port=3000)
