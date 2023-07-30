@@ -26,10 +26,19 @@ btnCalc.addEventListener("click", function (e) {
   let number = inputNum.value;
   //檢查使用者是否有輸入值以及該值能夠被轉換為數字
   if (number && Number(number)) {
-    //true -> 提交表單
-    formCalc.submit();
+    //true -> 呼叫submit
+    submit();
   } else {
     //false -> 顯示錯誤訊息
     hint_entering_correct_num.style.opacity = 1;
   }
 });
+
+function submit() {
+  let num = inputNum.value;
+  //設定url路徑
+  let url = "/square/" + num;
+  //使用BOM物件將路徑放進location.href
+  window.location.href = url;
+  return false;
+}

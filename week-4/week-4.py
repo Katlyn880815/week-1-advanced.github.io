@@ -55,21 +55,14 @@ def handle_error():
 def handle_signout():
     session['signed_in'] = False
     return redirect('/')
-
-######## Varify Page #########
-@app.route('/varify')
-def calc_square():
-    #取使用者輸入的數字
-    num = request.args.get('inputNum')
-        #利用redirect url_for傳遞使用者輸入參數
-    return redirect(url_for('square_result_page', num = num))
         
 ######## Square Page #########
-@app.route('/square/<num>')
+#使用<int:num>來接收前端傳遞的url
+@app.route('/square/<int:num>')
+#把num放進處理路徑/square/<num>函式參數中
 def square_result_page(num):
-    num = int(num)
-    result = num ** 2
-
-    return render_template('square_page.html', result = result)
+        num = int(num)
+        result = num ** 2
+        return render_template('square_page.html', result = result)
 
 app.run(port=3000)
