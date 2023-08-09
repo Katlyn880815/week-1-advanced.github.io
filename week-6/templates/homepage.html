@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HOME PAGE</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <div class="header__box">
+        <h1 class="heading__primary">歡迎光臨，請註冊登入系統</h1>
+      </div>
+      <div class="signup__box">
+        <h2 class="heading__secondary">註冊帳號</h2>
+        <form
+          action="/signup"
+          class="form form__signup"
+          id="form__signup"
+          method="POST"
+        >
+          <label for="signup__name" class="labels"
+            >姓名
+            <input type="text" id="signup__name" name="signup__name" />
+          </label>
+          <label for="signup__username" class="labels"
+            >帳號
+            <input type="text" id="signup__username" name="signup__username" />
+          </label>
+          <label for="signup__password" class="labels"
+            >密碼
+            <input
+              type="password"
+              id="signup__password"
+              name="signup__password"
+            />
+          </label>
+          <button class="btn btn__signup">註冊</button>
+        </form>
+        <p class="hint__blank-signup">
+          有欄位尚未輸入，請重新檢查再點擊註冊按鈕
+        </p>
+      </div>
+      <div class="login__box">
+        <h2 class="heading__secondary">登入系統</h2>
+        <form action="/signin" class="form" id="form__login" method="POST">
+          <label for="login__username" class="labels"
+            >帳號
+            <input type="text" id="login__username" name="login__username" />
+          </label>
+          <label for="login__password" class="labels"
+            >密碼
+            <input
+              type="password"
+              id="login__password"
+              name="login__password"
+            />
+          </label>
+          <button class="btn btn__signup">登入</button>
+        </form>
+        <p class="hint__blank-login">
+          有欄位尚未輸入，請重新檢查再點擊註冊按鈕
+        </p>
+      </div>
+    </main>
+    <script src="/static/script.js" type="text/javascript"></script>
+  </body>
+</html>

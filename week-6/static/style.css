@@ -1,0 +1,106 @@
+/* reset */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.container {
+  max-width: 130rem;
+  margin: 0 auto;
+}
+
+.signup__box,
+.login__box,
+.header__box,
+.comment__box,
+.user-comments__box {
+  width: 50rem;
+  margin: 0 auto;
+  border: 0.1rem solid #aaa;
+}
+
+.signup__box,
+.comment__box {
+  border-bottom: none;
+}
+
+.login__box,
+.signup__box,
+.comment__box {
+  padding: 2rem 0;
+}
+
+.form__signup {
+  padding-top: 2rem 0;
+}
+
+.labels {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  display: block;
+  margin: 0 auto;
+}
+/*** FONT ****/
+.heading__primary {
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+  font-size: 2rem;
+  background-color: #1d3446;
+}
+
+.heading__secondary {
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+/**************MEMBER page***********************/
+
+.member__box {
+  width: 50rem;
+  margin: 0 auto;
+  border: 0.1rem solid #aaa;
+  padding: 2rem 0;
+}
+
+.btn__signout,
+.btn__back-to-homepage {
+  text-align: center;
+  font-size: 1.7rem;
+}
+
+.hint__blank-signup,
+.hint__blank-login,
+.hint__blank-comment {
+  color: red;
+  font-size: 1.7rem;
+  opacity: 0;
+  text-align: center;
+}
+
+.user-comments__list {
+  list-style: none;
+  padding: 1rem 0;
+}
+
+.user-comments__content {
+  text-align: center;
+  font-size: 1.7rem;
+}
+
+.user-comments__user {
+  font-weight: bold;
+}
