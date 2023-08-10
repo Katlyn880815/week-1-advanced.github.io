@@ -35,14 +35,26 @@
       </div>
       <div class="user-comments__box">
         <ul class="user-comments__list">
-          {% for (user, content) in comments %}
+          {% for (user, content, id) in comments %}
           <li class="user-comments__content">
             <span class="user-comments__user">{{user}} :</span>
             <span>{{content}}</span>
+            {% if user == name %}
+            <form
+              action="/deleteMessage"
+              method="POST"
+              id="form__delete-msg"
+              class="form__delete-msg"
+            >
+              <input type="hidden" name="id" value="{{id}}" />
+              <button class="btn btn__delete-msg">X</button>
+            </form>
+            {% endif %}
           </li>
           {% endfor %}
         </ul>
       </div>
     </main>
+    <script src="/static/script.js" type="text/javascript"></script>
   </body>
 </html>

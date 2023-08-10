@@ -104,3 +104,11 @@ html {
 .user-comments__user {
   font-weight: bold;
 }
+
+.form__delete-msg {
+  display: inline;
+}
+
+.btn__delete-msg {
+  display: inline;
+}

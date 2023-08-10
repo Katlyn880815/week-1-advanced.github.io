@@ -25,7 +25,7 @@ def load_data(sql, username, password, commend):
     return result
 
 #Function for insert data
-def insert_data(sql, param):
+def crud_data(sql, param):
     con = mysql.connector.connect(
         user= 'root',
         host = 'localhost',
@@ -57,7 +57,7 @@ def member_page():
         username = None
         return redirect('/')
     #取得所有留言內容
-    comments = load_data('SELECT member.name, message.content FROM member INNER JOIN message ON member.id = message.member_id', username, password, 'for_search_data')
+    comments = load_data('SELECT member.name, message.content, message.id FROM member INNER JOIN message ON member.id = message.member_id', username, password, 'for_search_data')
     return render_template('member_page.html', name = name, comments = comments)
 
 ######## ROUTE /error ############
@@ -78,7 +78,7 @@ def handle_signup():
     #判斷資料是否已存在資料庫中
     result = load_data("select * from member where username = %s", username, password, 'for_checking_is_exist')
     if(result == None):
-        insert_data("INSERT INTO member(name, username, password) VALUES(%s, %s, %s)", (name, username, password,))
+        crud_data("INSERT INTO member(name, username, password) VALUES(%s, %s, %s)", (name, username, password,))
         return redirect('/')
     else:
         return redirect('/error?message=帳號已經被註冊')
@@ -114,7 +114,15 @@ def handle_signout():
 def handle_comments():
     user_id = session['id']
     content = request.form.get('user__new_message')
-    insert_data("INSERT INTO message(member_id, content) VALUES(%s, %s)",(user_id, content))
+    crud_data("INSERT INTO message(member_id, content) VALUES(%s, %s)",(user_id, content))
+    return redirect('/member')
+
+
+######## ROUTE /deleteMessage ############
+@app.route('/deleteMessage', methods=['POST'])
+def handle_deleteMsg():
+    msg_id = request.form.get('id')
+    crud_data('DELETE FROM message where id = %s', (msg_id,))
     return redirect('/member')
 
 app.run(port=3000)
