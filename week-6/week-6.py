@@ -49,7 +49,7 @@ def homepage():
 @app.route('/member')
 def member_page():
     try:
-        #檢查使用者狀態
+        #檢查使用者狀態，是否存取得到值
         name = session['name']
         username = session['username']
         password = session['password']
