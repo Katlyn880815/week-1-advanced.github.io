@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ERROR PAGE</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <div class="header__box">
+        <h1 class="heading__primary">失敗頁面</h1>
+      </div>
+      <div class="member__box">
+        <h2 class="heading__secondary">{{message}}</h2>
+        <a href="/" class="btn btn__back-to-homepage">返回首頁</a>
+      </div>
+    </main>
+  </body>
+</html>
