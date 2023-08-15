@@ -16,7 +16,7 @@
         <h1 class="heading__primary">歡迎光臨，這是會員頁</h1>
       </div>
       <div class="member__box">
-        <h2 class="heading__secondary">{{name}}，歡迎登入系統</h2>
+        <h2 class="heading__secondary name">{{name}}，歡迎登入系統</h2>
         <a href="/signout" class="btn btn__signout">登出系統</a>
       </div>
       <div class="comment__box">
@@ -35,24 +35,49 @@
       </div>
       <div class="user-comments__box">
         <ul class="user-comments__list">
-          {% for (user, content, id) in comments %}
+          {% for row in comments %}
           <li class="user-comments__content">
-            <span class="user-comments__user">{{user}} :</span>
-            <span>{{content}}</span>
-            {% if user == name %}
+            {% if row['name'] == name %}
+            <span class="user-comments__user current__user"
+              >{{row['name']}} :</span
+            >
+            <span>{{row['content']}}</span>
             <form
               action="/deleteMessage"
               method="POST"
               id="form__delete-msg"
               class="form__delete-msg"
             >
-              <input type="hidden" name="id" value="{{id}}" />
+              <input type="hidden" name="id" value="{{row['id']}}" />
               <button class="btn btn__delete-msg">X</button>
             </form>
+            {% else %}
+            <span class="user-comments__user">{{row['name']}} :</span>
+            <span>{{row['content']}}</span>
             {% endif %}
           </li>
           {% endfor %}
         </ul>
+      </div>
+      <div class="search-user__box">
+        <h2 class="heading__secondary">查詢會員姓名</h2>
+        <form action="/member" id="form__search-user">
+          <label for="search-user" class="labels">
+            <input type="text" name="search-user" id="search-user" />
+          </label>
+          <button class="btn btn__search">查詢</button>
+        </form>
+        <p class="result__search"></p>
+      </div>
+      <div class="update-name__box">
+        <h2 class="heading__secondary">更新我的姓名</h2>
+        <form action="/member" id="form__new_name">
+          <label for="new_name" class="labels">
+            <input type="text" name="user-update-name" id="new_name" />
+          </label>
+          <button class="btn">更新</button>
+        </form>
+        <p class="result__update"></p>
       </div>
     </main>
     <script src="/static/script.js" type="text/javascript"></script>

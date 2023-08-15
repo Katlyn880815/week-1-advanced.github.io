@@ -16,24 +16,35 @@ html {
   margin: 0 auto;
 }
 
+.container div:last-child {
+  margin-bottom: 2rem;
+}
+
 .signup__box,
 .login__box,
 .header__box,
 .comment__box,
-.user-comments__box {
+.user-comments__box,
+.search-user__box,
+.update-name__box {
   width: 50rem;
   margin: 0 auto;
   border: 0.1rem solid #aaa;
 }
 
-.signup__box,
-.comment__box {
+/* .signup__box,
+.comment__box,
+.user-comments__box {
+  border-bottom: none;
+} */
+.container div:not(:last-child) {
   border-bottom: none;
 }
 
 .login__box,
 .signup__box,
-.comment__box {
+.comment__box,
+.search-user__box {
   padding: 2rem 0;
 }
 
@@ -111,4 +122,11 @@ html {
 
 .btn__delete-msg {
   display: inline;
+}
+
+.result__search,
+.result__update {
+  font-size: 1.7rem;
+  text-align: center;
+  padding-top: 1.5rem;
 }

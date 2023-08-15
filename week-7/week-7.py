@@ -1,7 +1,9 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, url_for
 import mysql.connector
+import json
 
 #Function for load data
+#改function
 def load_data(sql, username, password, commend):
     con = mysql.connector.connect(
         user= 'root',
@@ -9,12 +11,10 @@ def load_data(sql, username, password, commend):
         password = '1234',
         database = 'website'
     )
-    cursor = con.cursor()
+    cursor = con.cursor(dictionary=True)
     if(commend == 'for_checking_is_exist'):
-        print(username)
         cursor.execute(sql, (username,))
         result = cursor.fetchone()
-        print(result)
     elif(commend == 'for_search_data'):
         cursor.execute(sql)
         result = cursor.fetchall()
@@ -49,14 +49,12 @@ def homepage():
 @app.route('/member')
 def member_page():
     try:
-        #檢查使用者狀態，是否存取得到值
         name = session['name']
         username = session['username']
         password = session['password']
     except:
         username = None
         return redirect('/')
-    #取得所有留言內容
     comments = load_data('SELECT member.name, message.content, message.id FROM member INNER JOIN message ON member.id = message.member_id', username, password, 'for_search_data')
     return render_template('member_page.html', name = name, comments = comments)
 
@@ -78,7 +76,10 @@ def handle_signup():
     #判斷資料是否已存在資料庫中
     result = load_data("select * from member where username = %s", username, password, 'for_checking_is_exist')
     if(result == None):
-        crud_data("INSERT INTO member(name, username, password) VALUES(%s, %s, %s)", (name, username, password,))
+        try:
+            crud_data("INSERT INTO member(name, username, password) VALUES(%s, %s, %s)", (name, username, password,))
+        except:
+            print('error')
         return redirect('/')
     else:
         return redirect('/error?message=帳號已經被註冊')
@@ -91,12 +92,14 @@ def handle_signin():
     username = request.form.get('login__username')
     password = request.form.get('login__password')
     result = load_data("select * from member where username = %s and password = %s", username, password, 'for_signin')
+    print(result)
     #加入session
     if(result):
-        session['id'] = result[0]
-        session['name'] = result[1]
-        session['username'] = result[2]
-        session['password'] = result[3]
+        for row in result:
+            session['id'] = result['id']
+            session['name'] = result['name']
+            session['username'] = result['username']
+            session['password'] = result['password']
         return redirect('/member')
     else:
         return redirect('/error?message=帳號或密碼輸入錯誤')
@@ -125,4 +128,47 @@ def handle_deleteMsg():
     crud_data('DELETE FROM message where id = %s', (msg_id,))
     return redirect('/member')
 
+######## ROUTE /api/member ################
+@app.route('/api/member', methods = ['GET', 'PATCH'])
+def search_user():
+    try:
+        username = session['username']
+        session['password']
+    except:
+        return redirect('/')
+            
+    if(request.method == 'GET'):
+        user_input_username = request.args.get('username')
+        data = load_data('Select id, name, username from member where username = %s', user_input_username, session['password'], 'for_checking_is_exist')
+        if(data == None):
+            data = {
+                "data": None
+            }
+        data = json.dumps(data)
+        return data
+    elif(request.method == 'PATCH'):
+        try: 
+            user_new_name = request.get_json()
+            user_new_name = user_new_name['name']
+            if(user_new_name != session['name']):
+                crud_data('update member set name = %s where username = %s', (user_new_name, username,))
+                check = load_data('select * from member where name = %s', user_new_name, session['password'], 'for_checking_is_exist')
+                data = {
+                    'ok': True
+                }
+                session['name'] = user_new_name
+            else:
+                data = {
+                'error': True,
+                'cause': 'Name Not Modified'
+            }
+        except:
+            data = {
+                'error': True,
+                'cause': 'Server error'
+            }
+        finally:
+            return json.dumps(data)
+
 app.run(port=3000)
+
