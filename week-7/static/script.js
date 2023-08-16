@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formForNewName.addEventListener("submit", function (e) {
       e.preventDefault();
       let newName = document.querySelector("#new_name").value;
+
       getData("PATCH", newName)
         .then((response) => {
           return response.json();

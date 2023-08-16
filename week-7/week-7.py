@@ -1,37 +1,40 @@
 from flask import Flask, render_template, redirect, request, session, url_for
 import mysql.connector
+import mysql.connector.pooling
 import json
 
-#Function for load data
-#改function
-def load_data(sql, username, password, commend):
-    con = mysql.connector.connect(
-        user= 'root',
-        host = 'localhost',
-        password = '1234',
-        database = 'website'
-    )
-    cursor = con.cursor(dictionary=True)
-    if(commend == 'for_checking_is_exist'):
-        cursor.execute(sql, (username,))
-        result = cursor.fetchone()
-    elif(commend == 'for_search_data'):
-        cursor.execute(sql)
-        result = cursor.fetchall()
+#connection pool
+db_config = {
+    'user': 'root',
+    'host': 'localhost',
+    'password': '1234',
+    'database': 'website'
+}
+connection_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name= 'my_pool', pool_size = 10, **db_config)
+
+#FUNCTION FOR SEARCH DATA
+def load_data_new(sql, params = ''):
+    conn = connection_pool.get_connection()
+    print(params)
+    if(params == ''):
+        try:
+            cursor = conn.cursor(dictionary = True)
+            cursor.execute(sql)
+            result = cursor.fetchall()
+        finally:
+            conn.close()
     else:
-        cursor.execute(sql, (username, password,))
-        result = cursor.fetchone()
-    con.close()
+        try:
+            cursor = conn.cursor(dictionary = True)
+            cursor.execute(sql, (params))
+            result = cursor.fetchone()
+        finally:
+            conn.close()
     return result
 
 #Function for insert data
 def crud_data(sql, param):
-    con = mysql.connector.connect(
-        user= 'root',
-        host = 'localhost',
-        password = '1234',
-        database = 'website'
-    )
+    con = connection_pool.get_connection()
     cursor = con.cursor()
     cursor.execute(sql, (param))
     con.commit()
@@ -39,6 +42,9 @@ def crud_data(sql, param):
 
 app = Flask(__name__, static_folder= 'static', static_url_path='/static', )
 app.secret_key = '1234'
+
+
+
 
 ######## ROUTE / ############
 @app.route('/')
@@ -55,7 +61,7 @@ def member_page():
     except:
         username = None
         return redirect('/')
-    comments = load_data('SELECT member.name, message.content, message.id FROM member INNER JOIN message ON member.id = message.member_id', username, password, 'for_search_data')
+    comments = load_data_new('SELECT member.name, message.content, message.id FROM member INNER JOIN message ON member.id = message.member_id')
     return render_template('member_page.html', name = name, comments = comments)
 
 ######## ROUTE /error ############
@@ -74,7 +80,7 @@ def handle_signup():
     password = request.form.get('signup__password')
 
     #判斷資料是否已存在資料庫中
-    result = load_data("select * from member where username = %s", username, password, 'for_checking_is_exist')
+    result = load_data_new("select * from member where username = %s", (username, ))
     if(result == None):
         try:
             crud_data("INSERT INTO member(name, username, password) VALUES(%s, %s, %s)", (name, username, password,))
@@ -91,8 +97,7 @@ def handle_signin():
     #接收使用者輸入資料
     username = request.form.get('login__username')
     password = request.form.get('login__password')
-    result = load_data("select * from member where username = %s and password = %s", username, password, 'for_signin')
-    print(result)
+    result = load_data_new("select * from member where username = %s and password = %s", (username, password,))
     #加入session
     if(result):
         for row in result:
@@ -139,7 +144,7 @@ def search_user():
             
     if(request.method == 'GET'):
         user_input_username = request.args.get('username')
-        data = load_data('Select id, name, username from member where username = %s', user_input_username, session['password'], 'for_checking_is_exist')
+        data = load_data_new('Select id, name, username from member where username = %s', (user_input_username,))
         if(data == None):
             data = {
                 "data": None
@@ -152,7 +157,6 @@ def search_user():
             user_new_name = user_new_name['name']
             if(user_new_name != session['name']):
                 crud_data('update member set name = %s where username = %s', (user_new_name, username,))
-                check = load_data('select * from member where name = %s', user_new_name, session['password'], 'for_checking_is_exist')
                 data = {
                     'ok': True
                 }
